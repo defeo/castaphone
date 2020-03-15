@@ -4,7 +4,7 @@ A pure JavaScript in-browser dictaphone / screen caster.
 
 ## Quickstart
 
-```
+```js
 <script>
   import {Castaphone} from "https://defeo.lu/castaphone/castaphone.js";
   let cast = new Castaphone();

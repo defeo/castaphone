@@ -8,11 +8,11 @@ export class Castaphone {
                 },
             },
             recorder: {
-                mimeType: 'video/webm; codec=vp9',
+                mimeType: 'video/webm',
             },
         }, opts);
 	this.keys = Object.assign({}, {
-	    onoff: 'KeyL',
+	    onoff: 'KeyZ',
 	    dictate: 'F1',
 	    toggle: 'F2',
 	    thrash: 'Backspace',
@@ -41,7 +41,7 @@ export class Castaphone {
                     this.notifyVisu();
             }
 	});
-	window.addEventListener('beforeunload', (e) => e.returnValue = this.stream);
+	window.addEventListener('beforeunload', (e) => this.state != 'inactive' && e.preventDefault());
     }
     
     get state() {
@@ -54,7 +54,7 @@ export class Castaphone {
 
     run() {
 	if (this.state == 'inactive') {
-            navigator.mediaDevices.getUserMedia(this.options.constraints).then((stream) => {
+            return navigator.mediaDevices.getUserMedia(this.options.constraints).then((stream) => {
 		this.stream = stream;
 		this.rec = new MediaRecorder(stream, this.options.recorder);
 		this.buffer = [];
@@ -78,7 +78,9 @@ export class Castaphone {
 		this.rec.addEventListener('stop', (e) => this.notifyVisu());
 
 		this.notifyVisu();
-	    }).catch(err => console.error(err));
+	    })
+	} else {
+	    return Promise.reject(new Error('Castaphone already running.'));
 	}
     }
 
@@ -153,7 +155,7 @@ export class Castaphone {
         window.addEventListener('keydown', e => {
             switch (e.code) {
 	    case this.keys.onoff:
-		e.ctrlKey && (e.shiftKey ? this.halt() : this.run());
+		e.ctrlKey && (e.shiftKey ? this.halt() : this.run().catch(err=>console.log(err)));
 		break;
             case this.keys.dictate:
                 this.record();
@@ -196,9 +198,8 @@ export class Castaphone {
                 chunks: this.chunks && this.chunks.map((c) => c.data.size) || [],
                 thrash: this.thrash && this.thrash.map((c) => c.data.size) || [],
                 last: this.chunks && this.chunks[this.chunks.length - 1] || null,
-		on: this.stream !== null,
-                recording: this.rec && this.rec.state == 'recording' || false,
-                playing: this.video && !this.video.paused || false,
+		state: this.state,
+                playing: !this.video.paused,
             }, window.origin);
         }
     }
@@ -280,7 +281,7 @@ export class Monitor {
     }
 
     refresh(data) {
-        this.recordLed.classList.toggle('active', data.recording);
+        this.recordLed.classList.toggle('active', data.state == 'recording');
         this.playLed.classList.toggle('active', data.playing);
 
         if (data.last) {

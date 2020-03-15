@@ -1,4 +1,155 @@
-<script type="module">
-  import {Castaphone} from "./castaphone.js";
-  let cast = new Castaphone();
-</script>
+<!Doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Castaphone</title>
+    <meta property="og:title" content="Castaphone">
+    
+    <meta name="description" content="Castaphone is an in-browser, dictaphone-like, screencast recorder.">
+    <meta property="og:description" content="Castaphone is an in-browser, dictaphone-like, screencast recorder.">
+
+    <meta property="og:url" content="https://defeo.lu/castaphone">
+    <meta property="og:image" content="">
+    
+    <meta name="twitter:card" content="summary">
+    <link rel="author" href="https://defeo.lu/"> 
+    <link rel="me" href="https://defeo.lu/">
+    <link rel="me" href="https://github.com/defeo">
+    <link rel="me" href="https://twitter.com/@luca_defeo">
+    <meta name="twitter:site" content="@luca_defeo">
+    <meta name="twitter:creator" content="@luca_defeo">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="assets/teko.css">
+    <style>
+      * { margin: 0; padding: 0; }
+      a { text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      body { font-family: 'Teko', sans-serif; font-size: 10vmin; }
+      h2, h3, h4, h5, h6 { font-weight: 500; text-align: center; }
+      p { font-weight: 300; }
+      main {
+	  height: 100vh;
+	  overflow-y: scroll;
+	  scroll-snap-type: y mandatory;
+	  scroll-behavior: smooth;
+      }
+      section {
+	  height: 100vh;
+	  scroll-snap-align: start;
+	  display: flex;
+	  flex-flow: column nowrap;
+	  align-items: center;
+	  justify-content: space-evenly;
+      }
+      section:nth-child(even) { background-color: #ffc3cd; color: #373737; }
+      section:nth-child(odd) { background-color: #45006c; color: white; }
+      section:nth-child(odd) a { color: #ff7800; }
+      button {
+	  font-family: inherit;
+	  font-size: inherit;
+	  color: inherit;
+	  background: rgba(255,255,255,0.3);
+	  padding: 0 8px;
+	  margin: 0 8px;
+	  cursor: pointer
+      }
+      button:hover {
+	  background: rgba(255,255,255,0.5);
+      }
+      #hints {
+	  font-size: 60%;
+	  font-weight: 300;
+	  display: grid;
+	  grid-template-columns: repeat(4, auto);
+	  grid-column-gap: 6px;
+	  transition: opacity 1s;
+      }
+      @media (max-width:150vh) {
+	  #hints { grid-template-columns: repeat(2, auto); }
+      }
+      #hints div:nth-child(even) {
+	  font-weight: 500;
+	  padding-right: 10px;
+      }
+      pre {
+	  font-size: 4vmin;
+	  background-color: rgba(255,255,255,0.2);
+	  padding: 10px;
+      }
+      .kw { color: #ff7800; }
+    </style>
+    
+    <script type="module">
+      import {Castaphone} from "./castaphone.js";
+      let cast = new Castaphone();
+      
+      document.querySelector("#launch").addEventListener('click', (e) => {
+	  cast.run()
+	      .then(() => {
+		  cast.visualisation();
+		  document.querySelector("#hints").style.opacity = '1';
+	      })
+	      .catch((err) => alert(err));
+      });
+    </script>
+  </head>
+  <body>
+    <main>
+      <section id="first">
+	<h1>Castaphone</h1>
+
+	<h3>A dictaphone, a screencaster!</h3>
+      </section>
+
+      <section>
+	<h3>What for?</h3>
+
+	<ul>
+	  <li>Slideshows with voiceover,</li>
+	  <li>Screencasts, demos,</li>
+	  <li>Recording anything, really!</li>
+	</ul>
+      </section>
+      
+      <section>
+	<h3>Why a "dictaphone"?</h3>
+
+	<p><small>She sells sea shells by the seashore.<br>
+	    The shells she sells are surely seashells.</br>
+	    So if she sells shells on the seashore,</br>
+	    I'm sure she sells seashore shells.</small></p>
+      </section>
+
+      <section>
+	<h3>Record, listen, thrash, record again</h3>
+
+	<p>Try it now!
+	  <button id="launch">Launch
+	    Castaphone</button></p>
+
+	<div id="hints" style="opacity:0;">
+	  <div>Record <small>(dictaphone)</small></div><div>F1</div>
+	  <div>Record <small>(continuous)</small></div><div>F2</div>
+	  <div>Playback last</div><div>Ctrl+Space</div>
+	  <div>Thrash last</div><div>Ctrl+Backspace</div>
+	  <div>Recover last</div><div>Ctrl+Shift+Backspace</div>
+	  <div>Download</div><div>Ctrl+S</div>
+	</div>
+      </section>
+
+      <section>
+	<h3>Learn more</h3>
+
+	<p>Castaphone is easily added to your web page:</p>
+<pre><span class="kw">import</span> {Castaphone} <span class="kw">from</span> "./castaphone.js";
+<span class="kw">let</span> cast = <span class="kw">new</span> Castaphone();</pre>
+
+	<p>Read the docs: <a href="https://github.com/defeo/castaphone">https://github.com/defeo/castaphone</a></p>
+      </section>
+    </main>
+  </body>
+</html>

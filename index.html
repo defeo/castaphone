@@ -23,14 +23,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="assets/teko.css">
+    <link rel="stylesheet" href="assets/sarah.css">
+    <link rel="stylesheet" href="assets/pompiere.css">
     <style>
       * { margin: 0; padding: 0; }
       a { text-decoration: none; }
       a:hover { text-decoration: underline; }
-      body { font-family: 'Teko', sans-serif; font-size: 10vmin; }
-      h2, h3, h4, h5, h6 { font-weight: 500; text-align: center; }
-      p { font-weight: 300; }
+      body { font-family: 'Pompiere', sans-serif; font-size: 10vmin; }
+      h1, h2 { font-family: 'SarahCaps'; }
+      h1 { font-size: 220%; }
+      h3, h4, h5, h6 {text-align: center; }
       main {
 	  height: 100vh;
 	  overflow-y: scroll;
@@ -62,7 +64,6 @@
       }
       #hints {
 	  font-size: 60%;
-	  font-weight: 300;
 	  display: grid;
 	  grid-template-columns: repeat(4, auto);
 	  grid-column-gap: 6px;
@@ -72,7 +73,6 @@
 	  #hints { grid-template-columns: repeat(2, auto); }
       }
       #hints div:nth-child(even) {
-	  font-weight: 500;
 	  padding-right: 10px;
       }
       pre {
@@ -106,7 +106,7 @@
       </section>
 
       <section>
-	<h3>What for?</h3>
+	<h2>What for?</h2>
 
 	<ul>
 	  <li>Slideshows with voiceover,</li>
@@ -116,7 +116,7 @@
       </section>
       
       <section>
-	<h3>Why a "dictaphone"?</h3>
+	<h2>Why a "dictaphone"?</h2>
 
 	<p><small>She sells sea shells by the seashore.<br>
 	    The shells she sells are surely seashells.</br>
@@ -142,7 +142,7 @@
       </section>
 
       <section>
-	<h3>Learn more</h3>
+	<h2>Learn more</h2>
 
 	<p>Castaphone is easily added to your web page:</p>
 <pre><span class="kw">import</span> {Castaphone} <span class="kw">from</span> "./castaphone.js";

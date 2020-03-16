@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+
+    <link rel="icon" href="assets/icon.png">
     
     <title>Castaphone</title>
     <meta property="og:title" content="Castaphone">
@@ -10,7 +12,7 @@
     <meta property="og:description" content="Castaphone is an in-browser, dictaphone-like, screencast recorder.">
 
     <meta property="og:url" content="https://defeo.lu/castaphone">
-    <meta property="og:image" content="">
+    <meta property="og:image" content="assets/poster.png">
     
     <meta name="twitter:card" content="summary">
     <link rel="author" href="https://defeo.lu/"> 
@@ -46,10 +48,23 @@
 	  flex-flow: column nowrap;
 	  align-items: center;
 	  justify-content: space-evenly;
+	  position: relative;
       }
       section:nth-child(even) { background-color: #ffc3cd; color: #373737; }
       section:nth-child(odd) { background-color: #45006c; color: white; }
       section:nth-child(odd) a { color: #ff7800; }
+      section:not(:last-child)::after {
+	  content: "↓";
+	  cursor: pointer;
+	  position: absolute;
+	  bottom: 0.5ex;
+	  opacity: 0.1;
+	  font-size: 60%;
+	  transition: opacity 0.5s;
+      }
+      section:hover:not(:last-child)::after {
+	  opacity: 0.5;
+      }
       button {
 	  font-family: inherit;
 	  font-size: inherit;
@@ -73,6 +88,7 @@
 	  #hints { grid-template-columns: repeat(2, auto); }
       }
       #hints div:nth-child(even) {
+	  font-weight:bold;
 	  padding-right: 10px;
       }
       pre {
@@ -81,6 +97,7 @@
 	  padding: 10px;
       }
       .kw { color: #ff7800; }
+      .logo { height: 1.1em; }
     </style>
     
     <script type="module">
@@ -94,13 +111,19 @@
 		  document.querySelector("#hints").style.opacity = '1';
 	      })
 	      .catch((err) => alert(err));
+	  e.stopPropagation();
+      });
+
+      document.querySelector('main').addEventListener('click', (e) => {
+	  console.log(e.currentTarget.innerHeight);
+	  e.currentTarget.scrollBy(0, window.innerHeight);
       });
     </script>
   </head>
   <body>
     <main>
       <section id="first">
-	<h1>Castaphone</h1>
+	<h1>Ca<img class="logo" src="assets/logo.png" alt="s"/>taphone</h1>
 
 	<h3>A dictaphone, a screencaster!</h3>
       </section>

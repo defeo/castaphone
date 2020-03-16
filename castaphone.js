@@ -30,6 +30,12 @@ export class Castaphone {
 	this.download = document.createElement('a');
 	document.body.appendChild(this.download);
 	this.video.style.display = this.download.style.display = 'none';
+	this.video.style.position = 'fixed';
+	this.video.style.top = '0';
+	this.video.style.left = '0';
+	this.video.style.width = '100%';
+	this.video.style.height = '100%';
+	this.video.style.backgroundColor = 'rgba(255,255,255,0.7)';
 	
         this.keyboard();
 	this.video.addEventListener('play', (e) => this.notifyVisu());
@@ -140,7 +146,6 @@ export class Castaphone {
             this.video.src = URL.createObjectURL(this.chunks[this.chunks.length - 1].data);
             this.video.play();
             if (video) {
-                this.video.requestFullscreen();
                 this.video.style.display = 'block';
             }
         }

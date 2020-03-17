@@ -32,7 +32,7 @@
       a { text-decoration: none; }
       a:hover { text-decoration: underline; }
       body { font-family: 'Pompiere', sans-serif; font-size: 10vmin; }
-      h1, h2 { font-family: 'SarahCaps'; }
+      h1, h2 { font-family: 'SarahCaps'; line-height: 1.1; text-align: center; }
       h1 { font-size: 220%; }
       h3, h4, h5, h6 {text-align: center; }
       main {
@@ -65,6 +65,14 @@
       section:hover:not(:last-child)::after {
 	  opacity: 0.5;
       }
+      
+      .logo { height: 1.1em; }
+      #watch {
+	  text-align: center;
+	  font-size: 60%;
+	  margin-top: 1ex;
+      }
+      
       button {
 	  font-family: inherit;
 	  font-size: inherit;
@@ -91,13 +99,13 @@
 	  font-weight:bold;
 	  padding-right: 10px;
       }
+      
       pre {
 	  font-size: 4vmin;
 	  background-color: rgba(255,255,255,0.2);
 	  padding: 10px;
       }
       .kw { color: #ff7800; }
-      .logo { height: 1.1em; }
     </style>
     
     <script type="module">
@@ -115,7 +123,6 @@
       });
 
       document.querySelector('main').addEventListener('click', (e) => {
-	  console.log(e.currentTarget.innerHeight);
 	  e.currentTarget.scrollBy(0, window.innerHeight);
       });
     </script>
@@ -125,7 +132,16 @@
       <section id="first">
 	<h1>Ca<img class="logo" src="assets/logo.png" alt="s"/>taphone</h1>
 
-	<h3>A dictaphone, a screencaster!</h3>
+	<div>
+	  <h3>A dictaphone, a screencaster!</h3>
+	  <p id="watch"><a href="#video">
+	    <svg viewBox="-11 -11 22 22" style="height:1em;vertical-align:sub" xmlns="http://www.w3.org/2000/svg">
+	      <circle fill="none" stroke="currentcolor" cx="0" cy="0" r="10"/>
+	      <path fill="currentcolor" d="M -3.5,6.06 L 7,0 L -3.5,-6.06 Z"/>
+	    </svg>
+	    watch the video</a>
+	  </p>
+	</div>
       </section>
 
       <section>
@@ -172,6 +188,15 @@
 <span class="kw">let</span> cast = <span class="kw">new</span> Castaphone();</pre>
 
 	<p>Read the docs: <a href="https://github.com/defeo/castaphone">https://github.com/defeo/castaphone</a></p>
+      </section>
+
+      <section id="video">
+	<h2>Watch the video</h2>
+	
+	<iframe
+	  src="https://player.vimeo.com/video/398134164"
+	  width="640" height="360" frameborder="0" allow="fullscreen" allowfullscreen
+	  loading="lazy" sandbox="allow-scripts"></iframe>
       </section>
     </main>
   </body>

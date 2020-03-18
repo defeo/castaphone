@@ -1,0 +1,120 @@
+<!Doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <link rel="icon" href="../assets/icon.png">
+    
+    <title>Castaphone PDF recorder</title>
+    <meta property="og:title" content="Castaphone PDF recorder">
+    
+    <meta name="description" content="Record a screencast of your PDF presentation using Castaphone.">
+    <meta property="og:description" content="Record a screencast of your PDF presentation using Castaphone.">
+
+    <meta property="og:url" content="https://defeo.lu/castaphone/pdf">
+    <meta property="og:image" content="https://defeo.lu/castaphone/assets/poster.png">
+    
+    <meta name="twitter:card" content="summary">
+    <link rel="author" href="https://defeo.lu/">
+    <link rel="me" href="https://defeo.lu/">
+    <link rel="me" href="https://github.com/defeo">
+    <link rel="me" href="https://twitter.com/@luca_defeo">
+    <meta name="twitter:site" content="@luca_defeo">
+    <meta name="twitter:creator" content="@luca_defeo">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+      * { margin: 0; padding: 0 }
+      body {
+	  width: 100vw;
+	  height: 100vh;
+	  background-color: black;
+	  overflow: hidden;
+      }
+      #pdf { width: 100%; height: 100%; }
+      #viewer {
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+      }
+    </style>
+    
+    <script src="https://unpkg.com/pdfjs-dist@2.2.228/build/pdf.js"></script>
+    <script src="https://unpkg.com/pdfjs-dist@2.2.228/web/pdf_viewer.js"></script>
+    
+    <script type="module">
+      import {Castaphone} from "../castaphone.js";
+      let cast = new Castaphone();
+
+      let $ = (elt) => document.querySelector(elt);
+
+//      pdfjsLib.GlobalWorkerOptions.workerSrc = "https://unpkg.com/pdfjs-dist@2.2.228/build/pdf.worker.js";
+      
+      let eventBus = new pdfjsViewer.EventBus();
+      let container = $('#pdf');
+      let file = $('input');
+
+      let viewer = window.viewer = new pdfjsViewer.PDFSinglePageViewer({
+	  container: $('#pdf'),
+	  eventBus: eventBus,
+      });
+
+      eventBus.on("pagesinit", function() {
+	  viewer.currentScaleValue = "page-fit";
+      });
+      window.addEventListener('resize', (e) => viewer.currentScaleValue = "page-fit");
+
+      // Load the PDF and start Castaphone
+      file.addEventListener('change', function() {
+	  pdfjsLib.getDocument(URL.createObjectURL(this.files[0])).promise
+	      .then(doc => viewer.setDocument(doc) || doc.getMetadata())
+	      .then(meta => meta.info.Title
+		    && (document.title = `${meta.info.Title} – ${document.title}`)
+		    // give time to the browser to update the title
+		    && new Promise(resolve => setTimeout(resolve, 0)))
+	      .then(() => cast.run())
+	      .then(() => window.location.search != '?nomonitor' && cast.visualisation())
+	      .catch(err => alert(err));
+      });
+      file.click();
+
+      // Moving through the presentation
+      function advance(step) {
+	  let n = viewer.currentPageNumber + step;
+	  if (n < 1 || n > viewer.pagesCount)
+	      return false;
+	  viewer.scrollPageIntoView({ pageNumber: n });
+      }
+
+      window.addEventListener('click', () => advance(1));
+      window.addEventListener('keyup', (e) => {
+	  switch (e.key) {
+	  case 'PageDown':
+	  case 'ArrowDown':
+	  case 'ArrowRight':
+	      advance(1);
+	      break;
+	  case 'PageUp':
+	  case 'ArrowUp':
+	  case 'ArrowLeft':
+	      advance(-1);
+	      break;
+	  case 'Home':
+	      viewer.scrollPageIntoView({ pageNumber: 1 });
+	      break;
+	  case 'End':
+	      viewer.scrollPageIntoView({ pageNumber: viewer.pagesCount });
+	      break;
+	  }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="pdf">
+      <div id="viewer" class="pdfViewer"></div>
+    </div>
+    <input type="file" accept=".pdf,application/pdf" style="display:none">
+  </body>
+</html>

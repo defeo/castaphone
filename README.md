@@ -169,6 +169,30 @@ ffmpeg -f concat -i filelist.txt -codec copy out.webm
 ```
 
 
+#### Can I record PDF or PowerPoint presentations?
+
+You can record anything you can show on your screen: the browser gives
+you the choice between capturing a single window, or the entire
+screen.
+
+To record a PowerPoint presentation, open it, launch Castaphone and
+point the browser to the PowerPoint window. **Warning:** to control
+the recording, the focus needs to be on the browser window, otherwise
+Castaphone will not receive the keystrokes.
+
+It is easier to do this with a large screen or a dual screen setting,
+where you can put the PowerPoint and the browser windows side-to-side.
+But, even if your browser window partially covers the PowerPoint
+window, Castaphone will still record exclusively what's on the
+PowerPoint. So you can manage even on small screens.
+
+Admittedly, this can be a bit annoying if you need to frequently
+switch focus to advance the presentation and then come back to
+Castaphone. For PDFs, you have an alternative option: load the PDF in
+the same window as Castaphone using
+<https://defeo.lu/castaphone/pdf/>.
+
+
 #### How do I post-process the video?
 
 You can use any video editing program of your liking. I personally
@@ -176,9 +200,40 @@ like [kdenlive](https://kdenlive.org/en/) and
 [OpenShot](https://www.openshot.org/).
 
 
-#### How do I make more complicated recordings?
+#### What format should I save the final video to?
+
+This is a difficult question. If you are going to host your video on a
+commercial platform (YouTube, Vimeo, etc.), just save it to a high
+quality format, because the platform will do transcoding to its
+preferred formats anyway.
+
+If you inted to self-host your video, here's some useful info:
+
+- Support for different formats varies among browsers. See this table:
+  <https://en.wikipedia.org/wiki/HTML5_video#Browser_support>. In
+  short, `.mp4` (h264) is the most supported format, followed closely
+  by `.webm` (vp8 or vp9).
+
+- Both h264 and vp8/9 can achieve impressive compression rates for
+  videos that contain mostly still images (such as slideshows),
+  however the default settings are usually not optimized for this use
+  case. Reduce your framerate (12 fps is enough for slides), and
+  experiment with various quality settings for the codec (in my
+  experience, `crf=20` to `crf=30` is good for vp8/9).
+  
+  And do not forget that reducing resolution is the easiest way to
+  save tons of bandwidth: do you really need it to be 1080p?
+
+- If your audio only contains voice, the typical codec setting is way
+  too high. 128 kbps is definitely enough for mp3, and 96 kbps is
+  enough for aac and vorbis (the audio codecs used in `.mp4` and
+  `.webm`, respectively). I find the opus codec at 96kbps gives the
+  best results for voice recordings, and is compatible with `.webm`.
+
+
+#### How do I make more complex recordings?
 
 Castaphone is a very basic program, with one specific recording
-routine in mind. If you need to record complex videos, with multiple
+routine in mind. If you need to record complex videos with multiple
 video and audio sources, I recommend using a more powerful tool, such
-as [OBS studio](https://obsproject.com/).
+as the amazing [OBS studio](https://obsproject.com/).

@@ -52,6 +52,7 @@
       }
       section:nth-child(even) { background-color: #ffc3cd; color: #373737; }
       section:nth-child(odd) { background-color: #45006c; color: white; }
+      section:nth-child(even) a { color: #3900d7; }
       section:nth-child(odd) a { color: #ff7800; }
       section:not(:last-child)::after {
 	  content: "↓";
@@ -181,13 +182,26 @@
       </section>
 
       <section>
-	<h2>Learn more</h2>
+	<h2>Make it yours</h2>
 
-	<p>Castaphone is easily added to your web page:</p>
+	<p>Add Castaphone to any HTML page, no server needed!</p>
 <pre><span class="kw">import</span> {Castaphone} <span class="kw">from</span> "./castaphone.js";
 <span class="kw">let</span> cast = <span class="kw">new</span> Castaphone();</pre>
 
-	<p>Read the docs: <a href="https://github.com/defeo/castaphone">https://github.com/defeo/castaphone</a></p>
+	<p><small>Example app:</small> <a href="pdf">a PDF
+	recorder</a>
+	  <small>based on
+	    <a href="https://mozilla.github.io/pdf.js"
+	    target="_blank"><img src="https://mozilla.github.io/pdf.js/images/logo.svg"
+	    alt="PDF.js" style="height:.8em"></a></small></p>
+      </section>
+
+      <section>
+	<h2>Learn more</h2>
+	
+	<h4>Read the docs, seek help, contribute:</h4>
+
+	<p><a href="https://github.com/defeo/castaphone">github.com/defeo/castaphone</a></p>
       </section>
 
       <section id="video">

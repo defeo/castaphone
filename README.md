@@ -193,6 +193,14 @@ the same window as Castaphone using
 <https://defeo.lu/castaphone/pdf/>.
 
 
+#### I cannot start the recording
+
+Check that your operating system is not blocking screen and microphone
+sharing sharing.
+
+In Windows 10, go to Start > Settings > Privacy > Camera.
+
+
 #### How do I post-process the video?
 
 You can use any video editing program of your liking. I personally
